@@ -6,7 +6,15 @@
 </head>
 <body>
   <h1>TikTok Demo</h1>
-  <p><a href="terms.html">Terms of Service</a></p>
-  <p><a href="privacy.html">Privacy Policy</a></p>
+  <p><a href="/login">Zaloguj przez TikTok</a></p>
+  <p><a href="terms.html">Terms of Service</a> | <a href="privacy.html">Privacy Policy</a></p>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("access_token");
+    if (token) {
+      localStorage.setItem("tt_token", token);
+      document.body.insertAdjacentHTML("beforeend", "<p>Zalogowano!</p>");
+    }
+  </script>
 </body>
 </html>
