@@ -1,5 +1,11 @@
 exports.handler = async () => {
   const clientKey = process.env.TIKTOK_CLIENT_KEY;
+  if (!clientKey) {
+    return {
+      statusCode: 500,
+      body: "Brak TIKTOK_CLIENT_KEY w środowisku Netlify."
+    };
+  }
   const redirectUri = "https://tiktok-demoye.netlify.app/callback.html";
   const scope = "user.info.basic,video.upload,video.publish";
   const state = Math.random().toString(36).substring(2);
