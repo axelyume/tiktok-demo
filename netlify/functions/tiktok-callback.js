@@ -1,7 +1,7 @@
 exports.handler = async (event) => {
   const code = event.queryStringParameters?.code;
   if (!code) {
-    return { statusCode: 400, body: "Brak kodu autoryzacji." };
+    return { statusCode: 302, headers: { Location: "/callback.html?error=1" } };
   }
   const params = new URLSearchParams();
   params.append("client_key", process.env.TIKTOK_CLIENT_KEY);
@@ -15,8 +15,9 @@ exports.handler = async (event) => {
     body: params
   });
   const data = await res.json();
+  const token = data?.data?.access_token || "";
   return {
-    statusCode: 200,
-    body: JSON.stringify(data)
+    statusCode: 302,
+    headers: { Location: `/callback.html?access_token=${encodeURIComponent(token)}` }
   };
 };
